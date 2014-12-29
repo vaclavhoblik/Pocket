@@ -2,9 +2,13 @@ package cz.vaclavhoblik.pocket;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import cz.vaclavhoblik.pocket.DbHelper;
 import cz.vaclavhoblik.pocket.models.Item;
@@ -38,15 +42,31 @@ public class CreateNewItemActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Submit form action.
+     * Creates new item and persists it.
+     *
+     * @param view
+     *
+     * @return void
+     */
     public void createItem(View view) {
-        if (view.getId() == R.id.action_settings) {
+
             DbHelper dbHelper = new DbHelper(this);
 
             Item createdItem = new Item();
 
-            createdItem.setValue(new Float(123));
+            EditText value = (EditText) findViewById(R.id.edit_message);
 
-            dbHelper.addItem(createdItem);
-        }
+            // TODO [hoblik, B] Find some more usefull validation.
+            try {
+                Float parsedValue = Float.parseFloat(value.getText().toString());
+                createdItem.setValue(parsedValue);
+                dbHelper.addItem(createdItem);
+            } catch (NumberFormatException e) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Validation Successful", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+                toast.show();
+            }
     }
 }

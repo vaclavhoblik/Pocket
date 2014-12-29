@@ -2,10 +2,15 @@ package cz.vaclavhoblik.pocket;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Intent;
 import android.app.Activity;
+
+import java.util.List;
+
+import cz.vaclavhoblik.pocket.models.Item;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -13,6 +18,18 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        DbHelper db = new DbHelper(this);
+
+        // Reading all contacts
+        Log.d("Reading: ", "Reading all contacts..");
+        List<Item> contacts = db.findAllItems();
+
+        for (Item cn : contacts) {
+            String log = "Id: " + cn.getId() + " ,Name: " + cn.getValue();
+            Log.d("Name: ", log);
+        }
     }
 
 

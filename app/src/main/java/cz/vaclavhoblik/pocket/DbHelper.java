@@ -1,9 +1,15 @@
 package cz.vaclavhoblik.pocket;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.ContentValues;
+import android.util.Log;
+
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.ArrayList;
 
 import cz.vaclavhoblik.pocket.models.Item;
 
@@ -34,7 +40,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "create table "
                     + TABLE_ITEMS + " ("
                     + " id integer primary key autoincrement, "
-                    + " amount float, "
+                    + " value float"
                     + " );");
 
         db.execSQL(createItemsTablesString);
@@ -50,7 +56,9 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public void addItem(Item item) {
+        String logvalue = Float.toString(item.getValue());
 
+        Log.d("Name: ", logvalue );
         ContentValues values = new ContentValues();
         values.put("value", item.getValue());
 
@@ -58,5 +66,37 @@ public class DbHelper extends SQLiteOpenHelper {
 
         db.insert(TABLE_ITEMS, null, values);
         db.close();
+
+        List<Item> contacts = this  .findAllItems();
+
+        for (Item cn : contacts) {
+            String log = "Id: " + cn.getId() + " ,Name: " + cn.getValue();
+            Log.d("Name: ", log);
+        }
+    }
+
+
+    public List<Item> findAllItems() {
+        List<Item> itemList = new ArrayList<Item>();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_ITEMS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Item item = new Item();
+
+                // TODO [hoblik, A] Try to find more inteligent way.
+                item.setId(Integer.parseInt(cursor.getString(0)));
+                item.setValue(Float.parseFloat(cursor.getString(1)));
+
+                itemList.add(item);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return itemList;
     }
 }
