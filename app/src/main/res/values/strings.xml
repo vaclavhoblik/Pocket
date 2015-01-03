@@ -9,6 +9,6 @@
     <string name="action_settings">Settings</string>
     <string name="create_amount">Částka</string>
     <string name="save">Uložit</string>
-
-
+    <string name="title_activity_list_items">Seznam plateb</string>
+    <string name="action_list_entries">Seznam plateb</string>
 </resources>

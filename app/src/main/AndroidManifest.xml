@@ -20,6 +20,10 @@
             android:name=".CreateNewItemActivity"
             android:label="@string/label_create_new" >
         </activity>
+        <activity
+            android:name=".ListItemsActivity"
+            android:label="@string/title_activity_list_items" >
+        </activity>
     </application>
 
 </manifest>
