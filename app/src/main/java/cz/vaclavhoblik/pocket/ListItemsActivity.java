@@ -8,8 +8,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import cz.vaclavhoblik.pocket.models.Item;
 
@@ -33,9 +37,21 @@ public class ListItemsActivity extends ListActivity {
         ArrayAdapter<String> adapter;
 
         for (Item cn : contacts) {
-            values.add(cn.getValue().toString());
+            Log.d("sadasd", cn.getDate().toString());
 
-            String log = "Id: " + cn.getId() + " ,Name: " + cn.getValue();
+            Long dateUnixtimestampLong = new Long(cn.getDate()) * 1000;
+
+            Date date = new Date();
+            date.setTime(dateUnixtimestampLong);
+
+            Log.d("aaaa", date.toString());
+
+            DateFormat format = new SimpleDateFormat("d.M.yyyy", Locale.ENGLISH);
+            String dateString = format.format(date);
+
+            values.add(dateString + " - " + cn.getValue().toString());
+
+            String log = "Id: " + cn.getId() + " ,Name: " + cn.getValue() + ", Date: " + cn.getDate();
             Log.d("Name: ", log);
         }
 

@@ -40,7 +40,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "create table "
                     + TABLE_ITEMS + " ("
                     + " id integer primary key autoincrement, "
-                    + " value float"
+                    + " value float, "
+                    + " date integer"
                     + " );");
 
         db.execSQL(createItemsTablesString);
@@ -61,18 +62,14 @@ public class DbHelper extends SQLiteOpenHelper {
         Log.d("Name: ", logvalue );
         ContentValues values = new ContentValues();
         values.put("value", item.getValue());
+        values.put("date",  item.getDate());
+
+        Log.d("saving to database", values.toString());
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.insert(TABLE_ITEMS, null, values);
         db.close();
-
-        List<Item> contacts = this  .findAllItems();
-
-        for (Item cn : contacts) {
-            String log = "Id: " + cn.getId() + " ,Name: " + cn.getValue();
-            Log.d("Name: ", log);
-        }
     }
 
 
@@ -91,6 +88,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 // TODO [hoblik, A] Try to find more inteligent way.
                 item.setId(Integer.parseInt(cursor.getString(0)));
                 item.setValue(Float.parseFloat(cursor.getString(1)));
+                item.setDate(Integer.parseInt(cursor.getString(2)));
 
                 itemList.add(item);
             } while (cursor.moveToNext());

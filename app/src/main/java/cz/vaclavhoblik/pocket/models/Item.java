@@ -11,6 +11,8 @@ public class Item {
 
     private Float value;
 
+    private Integer date;
+
     public long getId() {
         return id;
     }
@@ -27,8 +29,16 @@ public class Item {
         this.value = value;
     }
 
+    public Integer getDate() {
+        return this.date;
+    }
+
+    public void setDate(Integer date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
-        return value.toString();
+        return this.getValue().toString() +  ";" + this.getDate().toString() ;
     }
 }
