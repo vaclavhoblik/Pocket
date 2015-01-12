@@ -24,6 +24,14 @@
             android:name=".ListItemsActivity"
             android:label="@string/title_activity_list_items" >
         </activity>
+        <activity
+            android:name=".CreateNewCategoryActivity"
+            android:label="@string/title_activity_create_new_category" >
+        </activity>
+        <activity
+            android:name=".ListCategoriesActivity"
+            android:label="@string/title_activity_list_categories" >
+        </activity>
     </application>
 
 </manifest>

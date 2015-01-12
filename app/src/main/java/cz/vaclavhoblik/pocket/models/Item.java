@@ -13,6 +13,10 @@ public class Item {
 
     private Integer date;
 
+    private Integer categoryId;
+
+    // ==== Setters and getters ====
+
     public long getId() {
         return id;
     }
@@ -35,6 +39,14 @@ public class Item {
 
     public void setDate(Integer date) {
         this.date = date;
+    }
+
+    public Integer getCategoryId() {
+        return this.categoryId;
+    }
+
+    public void setCategoryId(Integer id) {
+        this.categoryId = id;
     }
 
     @Override
